@@ -1,5 +1,5 @@
 // Configured for aisultanp.goatcounter.com.
-// Upload this file to the repository's assets folder as assets/site.js.
+// Use on the GitHub Pages site: https://aisultanp.github.io/student-tech-lab/
 const GOATCOUNTER_CODE = 'aisultanp';
 
 const menu = document.querySelector('.menu-btn');
@@ -22,15 +22,21 @@ if (form) {
 
 (() => {
   const meta = document.querySelector('.article-meta');
-  // No account configured: leave the site unchanged and send no requests.
   if (!meta || !/^[a-z0-9][a-z0-9-]*$/.test(GOATCOUNTER_CODE)) return;
   if (location.hostname !== 'aisultanp.github.io') return;
   if (document.getElementById('article-visitors')) return;
 
-  // Root-level duplicate article URLs share the canonical article counter.
+  // Include all seven blog pages, even the original cybersecurity post.
   const filename = location.pathname.split('/').pop();
-  const articles = ['ai-changing-student-life.html', 'five-ai-tools.html',
-    'learning-programming-ai.html'];
+  const articles = [
+    'ai-changing-student-life.html',
+    'five-ai-tools.html',
+    'learning-programming-ai.html',
+    'cybersecurity-students.html',
+    'github-for-students.html',
+    'digital-study-tools.html',
+    'fact-check-ai-answers.html'
+  ];
   if (!articles.includes(filename)) return;
   const path = '/student-tech-lab/articles/' + filename;
   const origin = 'https://' + GOATCOUNTER_CODE + '.goatcounter.com';
@@ -63,7 +69,6 @@ if (form) {
       if (!/^\d[\d,.\s]*$/.test(count)) throw new Error('Invalid counter');
       badge.textContent = 'Visitors: ' + count;
     } catch (_) {
-      // Never invent a zero or a locally incremented total on failure.
       badge.textContent = 'Visitors: temporarily unavailable';
     } finally {
       clearTimeout(timeout);
